@@ -1,11 +1,15 @@
 
-from serial.tools import list_ports
 import time
+from serial.tools import list_ports
+import cv2
 
 import pydobot
 
+
 # Define the VID and PID for the Silicon Labs CP210x UART Bridge Automatically
 def get_connection():
+
+    # CP210x
     TARGET_VID = '10c4'
     TARGET_PID = 'ea60'
 
@@ -15,7 +19,7 @@ def get_connection():
 
     if target_ports:
         port = target_ports[0] 
-        print(f'Selected port: {port}')
+        print(f'Current selecteCurrent selectedd port: {port}')
         
     else:
         print("Target device not found. Please check the connection.")
@@ -24,7 +28,16 @@ def get_connection():
 
     return device
 
+
+
 device = get_connection()
+
+device.speed(velocity=100, acceleration=100)
+
+
+#addr=
+#device.get_eio(addr)
+#device.set_eio(addr)
 
 # current joints
 (x, y, z, r, j1, j2, j3, j4) = device.pose()
@@ -38,5 +51,9 @@ device.suck(True)
 time.sleep(10)
 device.suck(False)
 
-device.close()
+# grip
+#device.grip(True)
+#time.sleep(10)
+#device.grip(False)
 
+device.close()
