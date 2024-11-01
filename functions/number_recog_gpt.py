@@ -37,7 +37,7 @@ def parse_response_to_grid(response):
     # レスポンスの文字列をカンマで分割し、数値に変換
     numbers = list(map(int, response.split(',')))
     # 3x3の三次元配列に変換
-    grid = np.array(numbers).reshape((3, 3))
+    grid = np.array(numbers).reshape((3, 3)).tolist()
     return grid
 
 
