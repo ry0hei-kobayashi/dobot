@@ -32,24 +32,35 @@ def get_connection():
 
 device = get_connection()
 
-device.speed(velocity=100, acceleration=100)
 
 
-#addr=
-#device.get_eio(addr)
-#device.set_eio(addr)
+device.speed(velocity=50, acceleration=50)
+
+#device.get_eio(5)
+#device.get_eio(5)
+#device.set_eio(5,0)
+#device.set_eio(eio_addr, 0)
+
+device.set_eio(5,0)
+#print(device.get_eio(5))
+while device.get_eio(5) != 0:
+    print('wait for push')
+print('finish')
 
 # current joints
-(x, y, z, r, j1, j2, j3, j4) = device.pose()
-print(f'x:{x} y:{y} z:{z} j1:{j1} j2:{j2} j3:{j3} j4:{j4}')
-
-device.move_to(x + 20, y, z, r, wait=False)
-device.move_to(x, y, z, r, wait=True)  # Wait for the movement to finish
+#print("########################################")
+#(x, y, z, r, j1, j2, j3, j4) = device.pose()
+#print(f'x:{x} y:{y} z:{z} j1:{j1} j2:{j2} j3:{j3} j4:{j4}')
+#print("########################################")
+#
+#time.sleep(1)
+#device.move_to(x + 40, y + 20, z, r, wait=False)
+#device.move_to(x, y, z, r, wait=True)  # Wait for the movement to finish
 
 # suction
-device.suck(True)
-time.sleep(5)
-device.suck(False)
+#device.suck(True)
+#time.sleep(1)
+#device.suck(False)
 
 # grip
 #device.grip(True)

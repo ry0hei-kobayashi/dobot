@@ -1,12 +1,12 @@
 import heapq
 
-# initial_position = [
-#     [4,3,7],
-#     [0,6,2],
-#     [5,1,8]
-# ]
+#initial_position = [
+#    [4,3,7],
+#    [0,6,2],
+#    [5,1,8]
+#]
 
-def resolution_blockpazzle(initial_position):
+def resolution_puzzleblock(initial_position):
     # 目標状態
     goal_state = [
         [1, 2, 3],
@@ -63,5 +63,5 @@ def resolution_blockpazzle(initial_position):
     solution_path = solve_puzzle(initial_position)
     return solution_path
 
-r=resolution_blockpazzle(initial_position)
-print(r)
+#r=resolution_blockpuzzle(initial_position)
+#print(r)

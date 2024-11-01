@@ -10,9 +10,9 @@ from functions.get_connection import get_connection
 #get_image
 from functions.get_image import get_xtion_image
 #get_number
-from functions.number_recog_gpt import ask_chatgpt_question, parse_response_to_grid
+#from functions.number_recog_gpt import ask_chatgpt_question, parse_response_to_grid
 #ブロックパズルの解法
-from functions.resolution_puzzleblock import resolution_blockpazzle
+from functions.resolution_puzzleblock import resolution_puzzleblock
 
 ##grid_cordinate
 distance = 54 # ブロック間距離
@@ -32,7 +32,7 @@ image = get_xtion_image()
 if image is not None:
     cv_image = cv_bridge.imgmsg_to_cv2(image, desired_encoding='bgr8')
     cv2.imshow("xtion_image", cv_image)
-    cv2.waitKey(10)
+    cv2.waitKey(1)
 
 ##get_blocknumber
 # とりあえずの値
@@ -42,7 +42,7 @@ initial_position = [
     [5,1,8]
 ]
 ##get_resolution
-solution_path = resolution_blockpazzle(initial_position)
+solution_path = resolution_puzzleblock(initial_position)
 # とりあえずの値
 solution_path = [[1, 1], [0, 1], [0, 2], [1, 2], [1, 1], [0, 1], [0, 0]]
 
@@ -68,21 +68,21 @@ for i in solution_path:
         y = position_0_j + (1 if i[1] > position_0_j else -1)
     manip_posx, manip_posy = grid_pos[x][y] #動かす物体の座標
     put_posx, put_posy = grid_pos[position_0_i][position_0_j] #0の座標
-    dobot.move_to(x=manip_posx, y=manip_posy, z=high_z, wait=True)  # Wait for the movement to finish
-    time.sleep(10)
-    dobot.move_to(z=low_z, wait=True)
-    time.sleep(10)
+    dobot.move_to(x=manip_posx, y=manip_posy, z=high_z, r=0, wait=True)  # Wait for the movement to finish
+    time.sleep(0.2)
+    dobot.move_to(x=manip_posx, y=manip_posy, z=low_z, r=0, wait=True)
+    time.sleep(0.2)
     dobot.suck(True)
-    time.sleep(10)
-    dobot.move_to(z=high_z, wait=True)
-    time.sleep(10)
-    dobot.move_to(x=put_posx, y=put_posy, z=high_z, wait=True)
-    time.sleep(10)
-    dobot.move_to(z=low_z, wait=True)
-    time.sleep(10)
+    time.sleep(0.2)
+    dobot.move_to(x=manip_posx, y=manip_posy, z=high_z, r=0, wait=True)
+    time.sleep(0.2)
+    dobot.move_to(x=put_posx, y=put_posy, z=high_z, r=0, wait=True)
+    time.sleep(0.2)
+    dobot.move_to(x=put_posx, y=put_posy, z=low_z, r=0,  wait=True)
+    time.sleep(0.2)
     dobot.suck(False)
-    time.sleep(10)
-    dobot.move_to(z=high_z)
+    time.sleep(0.2)
+    dobot.move_to(x=put_posx, y=put_posy, z=high_z, r=0,  wait=True)
 
     position_0_i = x
     position_0_j = y
