@@ -3,21 +3,20 @@ import numpy as np
 import base64
 import os
 
-# OpenAI APIキーの設定
-key = os.getenv('OPENAI_API_KEY')
-openai.api_key = key
-def encode_image(image_path):
-    with open(image_path, "rb") as image_file:
-        return base64.b64encode(image_file.read()).decode("utf-8")
-    
-# 画像のパス
-image_path = "./IMG_5397.jpg"
-
-# 画像をbase64にエンコードする
-base64_image = encode_image(image_path)
-
-
 def ask_chatgpt_question():
+    # OpenAI APIキーの設定
+    key = os.getenv('OPENAI_API_KEY')
+    openai.api_key = key
+    def encode_image(image_path):
+        with open(image_path, "rb") as image_file:
+            return base64.b64encode(image_file.read()).decode("utf-8")
+        
+    # 画像のパス
+    image_path = "./IMG_5397.jpg"
+    
+    # 画像をbase64にエンコードする
+    base64_image = encode_image(image_path)
+    
     response = openai.chat.completions.create(
         model="gpt-4o",
         messages=[
