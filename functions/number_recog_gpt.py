@@ -3,9 +3,8 @@ import numpy as np
 import base64
 import os
 
-key = os.getenv('OPENAI_API_KEY')
-
 # OpenAI APIキーの設定
+key = os.getenv('OPENAI_API_KEY')
 openai.api_key = key
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:
@@ -40,8 +39,6 @@ def parse_response_to_grid(response):
     # 3x3の三次元配列に変換
     grid = np.array(numbers).reshape((3, 3))
     return grid
-
-# 質問
 
 
 # APIで質問を送信して回答を取得
