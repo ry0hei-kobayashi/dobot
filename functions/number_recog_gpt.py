@@ -3,7 +3,7 @@ import numpy as np
 import base64
 import os
 
-def ask_chatgpt_question():
+def ask_chatgpt_question(input_image):
     # OpenAI APIキーの設定
     key = os.getenv('OPENAI_API_KEY')
     openai.api_key = key
@@ -12,7 +12,7 @@ def ask_chatgpt_question():
             return base64.b64encode(image_file.read()).decode("utf-8")
         
     # 画像のパス
-    image_path = "./IMG_5397.jpg"
+    image_path = input_image
     
     # 画像をbase64にエンコードする
     base64_image = encode_image(image_path)
@@ -39,9 +39,9 @@ def parse_response_to_grid(response):
     grid = np.array(numbers).reshape((3, 3)).tolist()
     return grid
 
-
+input_image = "./IMG_5397.jpg"
 # APIで質問を送信して回答を取得
-response = ask_chatgpt_question()
+response = ask_chatgpt_question(input_image)
 print("ChatGPTの回答:", response)
 
 # 回答を3x3の三次元配列に変換
