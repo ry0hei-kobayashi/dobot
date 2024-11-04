@@ -5,17 +5,15 @@ import os
 
 def ask_chatgpt_question(input_image):
     # OpenAI APIキーの設定
-    key = os.getenv('OPENAI_API_KEY')
-    openai.api_key = key
-    def encode_image(image_path):
-        with open(image_path, "rb") as image_file:
-            return base64.b64encode(image_file.read()).decode("utf-8")
-        
+    openai.api_key = os.getenv('OPENAI_API_KEY')
+
     # 画像のパス
     image_path = input_image
-    
+        
     # 画像をbase64にエンコードする
-    base64_image = encode_image(image_path)
+    with open(image_path, "rb") as image_file:
+        base64_image = base64.b64encode(image_file.read()).decode("utf-8")
+    
     
     response = openai.chat.completions.create(
         model="gpt-4o",
