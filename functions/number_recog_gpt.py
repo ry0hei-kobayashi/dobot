@@ -10,7 +10,7 @@ def ask_chatgpt_question():
     openai.api_key = os.getenv('OPENAI_API_KEY')
         
     # 画像をbase64にエンコードする
-    with open(image_path, "rb") as image_file:
+    with open('./images/img.jpg', "rb") as image_file:
         base64_image = base64.b64encode(image_file.read()).decode("utf-8")
     
     response = openai.chat.completions.create(
