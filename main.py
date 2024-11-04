@@ -20,17 +20,23 @@ from functions.number_recog_gpt import ask_chatgpt_question, parse_response_to_g
 from functions.resolution_puzzleblock import resolution_puzzleblock
 
 ##grid_cordinate
-distance = 54 # ブロック間距離
-x, y = [200, -50] # 0-0の座標
+distance = 51 # ブロック間距離
+
+home_x, home_y = 200, -150
+
+x, y = [190, -50] # 0-0の座標
 
 grid_pos = [[[x + i*distance, y + j*distance] for j in range(3)] for i in range(3)]
 
 ##z_cordinate
 high_z = 15
-low_z = -38
+low_z = -40
 
 ##get_connection
 dobot = get_connection()
+
+##movetoHOME
+dobot.move_to(x=home_x, y=home_y, z=high_z, r=0, wait=True)
 
 ##get_image
 #if image is not None:
@@ -53,6 +59,7 @@ print("Response from ChatGPT:", response)
 
 initial_position = parse_response_to_grid(response)
 
+# sample value
 #initial_position = [
 #    [4,3,7],
 #    [0,6,2],
@@ -75,6 +82,8 @@ for i in range(len(initial_position)):
             position_0_i = i
             position_0_j = j
             break
+
+#TODO 腕をどける
 
 #block_movement
 print("move robot")
@@ -109,4 +118,7 @@ for i in solution_path:
 
     position_0_i = x
     position_0_j = y
+    
+##movetoHOME
+dobot.move_to(x=home_x, y=home_y, z=high_z, r=0, wait=True)
 
