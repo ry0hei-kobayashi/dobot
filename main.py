@@ -2,6 +2,7 @@
 #common libraries
 import time
 import cv2
+import base64
 from cv_bridge import CvBridge
 cv_bridge = CvBridge()
 
@@ -11,8 +12,10 @@ from functions.get_connection import get_connection
 #get_image
 from functions.get_image import get_xtion_image
 
+
 #get_number
-#from functions.number_recog_gpt import ask_chatgpt_question, parse_response_to_grid
+from functions.number_recog_gpt import ask_chatgpt_question, parse_response_to_grid
+
 #ブロックパズルの解法
 from functions.resolution_puzzleblock import resolution_puzzleblock
 
@@ -30,26 +33,42 @@ low_z = -38
 dobot = get_connection()
 
 ##get_image
-image = get_xtion_image()
-if image is not None:
-    cv_image = cv_bridge.imgmsg_to_cv2(image, desired_encoding='bgr8')
-    cv2.imshow("xtion_image", cv_image)
-    cv2.waitKey(1)
+#if image is not None:
+while True:
+    image = get_xtion_image()
 
-##get_blocknumber
-# とりあえずの値
-initial_position = [
-    [4,3,7],
-    [0,6,2],
-    [5,1,8]
-]
+    if image is not None: 
+        cv_image = cv_bridge.imgmsg_to_cv2(image, desired_encoding='bgr8')
+        save_image = cv2.imwrite('./images/img.jpg', cv_image)
+        #cv2.imshow("xtion_image", cv_image)
+        #cv2.waitKey(10)
+        break
+
+    else:
+        print("Image from the xtion is not available")
+
+print("before gpt")
+response = ask_chatgpt_question()
+print("Response from ChatGPT:", response)
+
+initial_position = parse_response_to_grid(response)
+
+#initial_position = [
+#    [4,3,7],
+#    [0,6,2],
+#    [5,1,8]
+#]
+
+print("3x3 array:\n", initial_position)
+
 
 ##get_resolution
 solution_path = resolution_puzzleblock(initial_position)
-# とりあえずの値
-solution_path = [[1, 1], [0, 1], [0, 2], [1, 2], [1, 1], [0, 1], [0, 0]]
 
-##get_0.position
+# sample value
+#solution_path = [[1, 1], [0, 1], [0, 2], [1, 2], [1, 1], [0, 1], [0, 0]]
+
+#get_0.position
 for i in range(len(initial_position)):
     for j in range(len(initial_position[i])):
         if initial_position[i][j] == 0:
@@ -57,7 +76,8 @@ for i in range(len(initial_position)):
             position_0_j = j
             break
 
-##block_movement
+#block_movement
+print("move robot")
 for i in solution_path:
     # 0の3×3における位置取得
     if i[0] == position_0_i:
@@ -89,26 +109,4 @@ for i in solution_path:
 
     position_0_i = x
     position_0_j = y
-
-
-
-
-
-
-        
-        
-    
-
-
-    
-
-
-
-
-
-
-
-
-
-
 

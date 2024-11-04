@@ -20,5 +20,3 @@ if image is not None:
     cv2.imshow("xtion_image", cv_image)
     cv2.waitKey(10)
 
-
-

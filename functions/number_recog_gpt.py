@@ -3,19 +3,15 @@ import numpy as np
 import base64
 import os
 
-def ask_chatgpt_question(input_image):
+
+def ask_chatgpt_question():
+
     # OpenAI APIキーの設定
-    key = os.getenv('OPENAI_API_KEY')
-    openai.api_key = key
-    def encode_image(image_path):
-        with open(image_path, "rb") as image_file:
-            return base64.b64encode(image_file.read()).decode("utf-8")
-        
-    # 画像のパス
-    image_path = input_image
+    openai.api_key = os.getenv('OPENAI_API_KEY')
+
     
-    # 画像をbase64にエンコードする
-    base64_image = encode_image(image_path)
+    with open('./images/img.jpg', "rb") as image_file:
+           base64_image = base64.b64encode(image_file.read()).decode("utf-8")
     
     response = openai.chat.completions.create(
         model="gpt-4o",
@@ -26,7 +22,7 @@ def ask_chatgpt_question(input_image):
                 {"type": "image_url", "image_url":{"url": f"data:image/jpeg;base64,{base64_image}"}},  # 画像の指定の仕方がちょい複雑
             ]}
         ],
-        max_tokens = 300
+        max_tokens = 2000
     )
     # 回答のテキストを取得
     answer = response.choices[0].message.content
@@ -39,7 +35,10 @@ def parse_response_to_grid(response):
     grid = np.array(numbers).reshape((3, 3)).tolist()
     return grid
 
+
+"""
 input_image = "./IMG_5397.jpg"
+
 # APIで質問を送信して回答を取得
 response = ask_chatgpt_question(input_image)
 print("ChatGPTの回答:", response)
@@ -47,3 +46,4 @@ print("ChatGPTの回答:", response)
 # 回答を3x3の三次元配列に変換
 grid = parse_response_to_grid(response)
 print("3x3グリッド配列:\n", grid)
+"""
