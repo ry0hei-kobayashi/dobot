@@ -6,7 +6,7 @@ import heapq
 #    [5,1,8]
 #]
 
-def resolution_puzzleblock(initial_position):
+def blockpuzzle_solver(initial_position):
     # 目標状態
     goal_state = [
         [1, 2, 3],

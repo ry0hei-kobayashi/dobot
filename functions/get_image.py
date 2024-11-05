@@ -1,3 +1,5 @@
+###before install openni2_ros_docker to your env
+
 import rclpy
 from openni2_interfaces.srv import GetXtionImage
 
@@ -23,6 +25,7 @@ def get_xtion_image():
     rclpy.spin_until_future_complete(node, future)
     
     rgb_image = None
+
     if future.result() is not None:
         response = future.result()
         if response.rgb_image:

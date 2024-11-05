@@ -1,12 +1,15 @@
+import os
+import cv2
+
 import rclpy
 from rclpy.node import Node
+
 from sensor_msgs.msg import Image
-import cv2
 from cv_bridge import CvBridge
 
 class ImageToMp4(Node):
     def __init__(self):
-        super().__init__('image_to_mp4')
+        super().__init__('msg_to_mp4')
         
         self.subscription = self.create_subscription(
             Image,
@@ -16,12 +19,26 @@ class ImageToMp4(Node):
         
         self.bridge = CvBridge()
         
-        self.output_file = './videos/output.mp4'
+        #self.output_file = './videos/output.mp4'
+        self.output_file = self.set_output_filename('./videos/output.mp4')
+        print('output_filename is ', self.output_file)
         self.fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         self.out = None
         self.frame_width = None
         self.frame_height = None
         self.fps = 30  
+
+    def set_output_filename(self, filename):
+        base, ext = os.path.splitext(filename)
+        counter = 1
+        new_filename = filename
+
+        while os.path.exists(new_filename):
+            new_filename = f"{base}{counter}{ext}"
+            counter += 1
+
+        return new_filename
+
         
     def image_callback(self, msg):
         print("recording...")
@@ -34,7 +51,7 @@ class ImageToMp4(Node):
         self.out.write(frame)
     
     def destroy_node(self):
-        print("finaliztig...")
+        print("finalizing...\n")
         if self.out:
             self.out.release()
         super().destroy_node()
