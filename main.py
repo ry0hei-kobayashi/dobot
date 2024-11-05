@@ -16,6 +16,8 @@ from functions.get_image import get_xtion_image
 from functions.number_recog_gpt import ask_chatgpt_question, parse_response_to_grid
 #ブロックパズルの解法
 from functions.blockpuzzle_solver import blockpuzzle_solver
+#proc_img
+from functions.proc_img import proc_img
 
 
 ##grid_cordinate
@@ -43,7 +45,9 @@ while True:
 
     if image is not None: 
         cv_image = cv_bridge.imgmsg_to_cv2(image, desired_encoding='bgr8')
-        save_image = cv2.imwrite('./images/img.jpg', cv_image)
+        cv_image = proc_img(cv_image)
+        
+        #save_image = cv2.imwrite('./images/img.jpg', cv_image)
         #cv2.imshow("xtion_image", cv_image)
         #cv2.waitKey(10)
         break
