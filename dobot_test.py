@@ -41,11 +41,11 @@ device.speed(velocity=50, acceleration=50)
 #device.set_eio(5,0)
 #device.set_eio(eio_addr, 0)
 
-device.set_eio(5,0)
-#print(device.get_eio(5))
-while device.get_eio(5) != 0:
-    print('wait for push')
-print('finish')
+#device.set_eio(5,0)
+##print(device.get_eio(5))
+#while device.get_eio(5) != 0:
+#    print('wait for push')
+#print('finish')
 
 # current joints
 #print("########################################")
@@ -59,8 +59,8 @@ print('finish')
 
 # suction
 #device.suck(True)
-#time.sleep(1)
-#device.suck(False)
+#time.sleep(10)
+device.suck(False)
 
 # grip
 #device.grip(True)

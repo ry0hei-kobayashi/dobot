@@ -21,5 +21,5 @@ def proc_img(input_image):
     # Save and display enhanced image
     enhanced_image_path = './images/img.jpg' # if you read this function from main.py
     inverted_image.save(enhanced_image_path)
-    inverted_image.show()
+    #inverted_image.show()
 

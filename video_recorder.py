@@ -7,7 +7,7 @@ from rclpy.node import Node
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
-class ImageToMp4(Node):
+class Msg2Video(Node):
     def __init__(self):
         super().__init__('msg_to_mp4')
         
@@ -58,7 +58,7 @@ class ImageToMp4(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = ImageToMp4()
+    node = Msg2Video()
     
     try:
         rclpy.spin(node)
